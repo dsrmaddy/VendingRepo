@@ -3,10 +3,11 @@ package com.thoughtworks.vapasi.vendingassignment;
 import java.util.*;
 
 public class VendingMachine {
-    private HashMap<Integer, Item> itemMap = new HashMap<Integer, Item>();
+    private HashMap<Integer, Item> itemMap = new HashMap<Integer, Item>(); //map of itemId and corresponding items
     private int totalAmount = 0;
     private int lastCustomerBalanceReturned;
 
+    //used to display item menu
     private void displayMenu() {
         Collection<Item> itemList;
         itemList = (Collection<Item>) itemMap.values();
@@ -19,13 +20,13 @@ public class VendingMachine {
         }
         System.out.println(fmt);
     }
-
+     //fill the machine with the items
     private void populateItemMap(int id, Item item) {
         itemMap.put(id, item);
     }
 
+    //returns the correct Item corresponding to its Id
     private Item getItem(int itemId) {
-
         return itemMap.get(itemId);
     }
 
@@ -41,8 +42,8 @@ public class VendingMachine {
         vm.getUserInput();
     }
 
+    //Take input from user
     private void getUserInput() {
-        //Take input from user
         System.out.println("Enter Item ID: ");
         Scanner s = new Scanner(System.in);
         int userId = s.nextInt();
@@ -51,6 +52,7 @@ public class VendingMachine {
         takeOrder(userId, userAmount);
     }
 
+    //contains logic for vending items and calculate balance
     private void takeOrder(int itemId, int entryAmount) {
         Item item = getItem(itemId);
         if(item == null) {
@@ -65,12 +67,15 @@ public class VendingMachine {
             int balance = entryAmount-price;
             System.out.println("Returning amount is :"+balance);
         }
-        totalAmount = totalAmount + price;
+        totalAmount = totalAmount + price; //keeps track of amount in vending machine
         dispense(item.getItemName());
     }
 
+    //displays the item being dispensed and waits for next user input
     private void dispense(String name){
         System.out.println("Dispensing item "+name);
+        displayMenu();
+        getUserInput();
     }
 
     //to keep track of vending machine
